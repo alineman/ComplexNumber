@@ -4,13 +4,13 @@
  * Date: 27.05.13
  * Time: 16:01
  */
-public class ComplexNumber {
+public class ComplexNumber {                //TODO: Сделать обработку деления на 0
     private float Re;
     private float Im;
 
     public ComplexNumber(int re, int im) {
-        this.Re = re;
-        this.Im = im;
+        this.Re = (float) re;
+        this.Im = (float) im;
     }
 
     public ComplexNumber() {
@@ -39,7 +39,7 @@ public class ComplexNumber {
     }
 
     public void print() {
-        System.out.println("(" + this.Re + (this.Im > 0 ? " + " : " - ") + Math.abs(this.Im) + "i)");
+        System.out.printf("(%s%s%si)%n", this.Re, this.Im > 0 ? " + " : " - ", Math.abs(this.Im));
     }
 
     public String toString() {
