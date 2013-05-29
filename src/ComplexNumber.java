@@ -8,6 +8,31 @@ public class ComplexNumber {                //TODO: Сделать обрабо�
     private float Re;
     private float Im;
 
+    public ComplexNumber(float re, float im) {
+        Re = re;
+        Im = im;
+    }
+
+    private char operation;
+
+
+    public float getIm() {
+        return Im;
+    }
+
+    public float getRe() {
+
+        return Re;
+    }
+
+    public void setOperation(char operation) {
+        this.operation = operation;
+    }
+
+    public char getOperation() {
+        return operation;
+    }
+
     public ComplexNumber(int re, int im) {
         this.Re = (float) re;
         this.Im = (float) im;
@@ -18,24 +43,28 @@ public class ComplexNumber {                //TODO: Сделать обрабо�
         this.Im = 0;
     }
 
-    public void add(ComplexNumber in) {
-        this.Re = this.Re + in.Re;
-        this.Im = this.Im + in.Im;
+    public static ComplexNumber add(ComplexNumber a, ComplexNumber b) {
+        return new ComplexNumber(
+                a.Re + b.Re,
+                b.Im + b.Im);
     }
 
-    public void subtraction(ComplexNumber in) {
-        this.Re = this.Re - in.Re;
-        this.Im = this.Im - in.Im;
+    public static ComplexNumber subtraction(ComplexNumber a, ComplexNumber b) {
+        return new ComplexNumber(
+                a.Re - b.Re,
+                a.Im - b.Im);
     }
 
-    public void multiply(ComplexNumber in) {
-        this.Re = this.Re * in.Re - this.Im * in.Im;
-        this.Im = this.Re * in.Im + this.Im * in.Re;
+    public static ComplexNumber multiply(ComplexNumber a, ComplexNumber b) {
+        return new ComplexNumber(
+                a.Re * b.Re - a.Im * b.Im,
+                a.Re * b.Im + a.Im * b.Re);
     }
 
-    public void division(ComplexNumber in) {
-        this.Re = (this.Re * in.Re + this.Im * in.Im) / (this.Re * this.Re + in.Re * in.Re);
-        this.Im = (this.Im * in.Re - this.Re * in.Im) / (this.Re * this.Re + in.Re * in.Re);
+    public static ComplexNumber division(ComplexNumber a, ComplexNumber b) {
+        return new ComplexNumber(
+                (a.Re * b.Re + a.Im * b.Im) / (a.Re * b.Re + b.Re * b.Re),
+                (a.Im * b.Re - a.Re * b.Im) / (a.Re * a.Re + b.Re * b.Re));
     }
 
     public void print() {
@@ -44,5 +73,30 @@ public class ComplexNumber {                //TODO: Сделать обрабо�
 
     public String toString() {
         return "(" + this.Re + (this.Im > 0 ? " + " : " - ") + Math.abs(this.Im) + "i)";
+    }
+
+    public static ComplexNumber solve(ComplexNumber a, ComplexNumber b) {
+        ComplexNumber result;
+        switch (a.getOperation()) {
+            case '+':
+                result = add(a, b);
+                break;
+            case '-':
+                result = subtraction(a, b);
+                break;
+            case '*':
+                result = multiply(a, b);
+                break;
+            case '/':
+                result = division(a, b);
+                break;
+            default:
+                result = null;
+                break;
+        }
+        if (result != null) {
+            result.setOperation(b.getOperation());
+        }
+        return result;
     }
 }

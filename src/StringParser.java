@@ -22,20 +22,19 @@ public class StringParser {
         String stringRe;
         int Im;
         String stringIm;
-        int split = data.lastIndexOf("+");
-
+        int split = (data.lastIndexOf("+") > data.lastIndexOf("-")) ? data.lastIndexOf("+") : data.lastIndexOf("-");
 
         if (data.charAt(data.length() - 1) == 'i') {
-            stringIm = data.substring(split + 1, data.length() - 1);
+            stringIm = data.substring(split, data.length() - 1);
             stringRe = data.substring(0, split);
         } else {
             stringIm = data.substring(0, split - 1);
-            stringRe = data.substring(split + 1, data.length());
+            stringRe = data.substring(split, data.length());
         }
 
 
-        Re = Integer.parseInt(stringRe);
-        Im = Integer.parseInt(stringIm);
+        Re = Integer.parseInt(stringRe.replace("+",""));
+        Im = Integer.parseInt(stringIm.replace("+",""));
 
         return new ComplexNumber(Re, Im);
     }
